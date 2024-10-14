@@ -1,4 +1,8 @@
 # Pitstop - Garage Management System
+
+NB 14-10-2024 (BW): Dit is een fork van `edwinvw/pitstop` om het een 'template' repo van te kunnen maken en een GitHub classroom assignment te maken.
+Merk op dat Edin's bijbehorende [Pitstop Wiki pagina's](https://github.com/EdwinVW/pitstop/wiki waar veel van de documentatie over Context Mapping, DDD etc. in zit mogelijk niet mee kwamen in deze clome.
+
 This repo contains a sample application based on a Garage Management System for Pitstop - a fictitious garage / car repair shop. The primary goal of this sample is to demonstrate several software-architecture concepts like:  
 * Microservices  
 * CQRS  
