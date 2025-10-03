@@ -1,38 +1,35 @@
-using OpenQA.Selenium;
+namespace Pitstop.UITest.PageModel.Pages.CustomerManagement;
 
-namespace Pitstop.UITest.PageModel.Pages.CustomerManagement
+/// <summary>
+/// Represents the RegisterCustomer page.
+/// </summary>
+public class RegisterCustomerPage : PitstopPage
 {
-    /// <summary>
-    /// Represents the RegisterCustomer page.
-    /// </summary>
-    public class RegisterCustomerPage : PitstopPage
-    {   
-        public RegisterCustomerPage(PitstopApp pitstop) : base("Customer Management - register customer", pitstop)
-        {
-        }
+    public RegisterCustomerPage(PitstopApp pitstop) : base("Customer Management - register customer", pitstop)
+    {
+    }
 
-        public RegisterCustomerPage FillCustomerDetails(string name, string address,
-            string city, string postalCode, string telephoneNumber, string emailAddress)
-        {
-            WebDriver.FindElement(By.Name("Customer.Name")).SendKeys(name);
-            WebDriver.FindElement(By.Name("Customer.Address")).SendKeys(address);
-            WebDriver.FindElement(By.Name("Customer.PostalCode")).SendKeys(postalCode);
-            WebDriver.FindElement(By.Name("Customer.City")).SendKeys(city);
-            WebDriver.FindElement(By.Name("Customer.TelephoneNumber")).SendKeys(telephoneNumber);
-            WebDriver.FindElement(By.Name("Customer.EmailAddress")).SendKeys(emailAddress);
-            return this;
-        }
+    public async Task<RegisterCustomerPage> FillCustomerDetailsAsync(string name, string address,
+        string city, string postalCode, string telephoneNumber, string emailAddress)
+    {
+        await Page.FillAsync("[name=\"Customer.Name\"]", name);
+        await Page.FillAsync("[name=\"Customer.Address\"]", address);
+        await Page.FillAsync("[name=\"Customer.PostalCode\"]", postalCode);
+        await Page.FillAsync("[name=\"Customer.City\"]", city);
+        await Page.FillAsync("[name=\"Customer.TelephoneNumber\"]", telephoneNumber);
+        await Page.FillAsync("[name=\"Customer.EmailAddress\"]", emailAddress);
+        return this;
+    }
 
-        public CustomerManagementPage Submit()
-        {
-            WebDriver.FindElement(By.Id("SubmitButton")).Click();
-            return new CustomerManagementPage(Pitstop);
-        }
+    public async Task<CustomerManagementPage> SubmitAsync()
+    {
+        await Page.ClickAsync("#SubmitButton");
+        return new CustomerManagementPage(Pitstop);
+    }
 
-        public CustomerManagementPage Cancel()
-        {
-            WebDriver.FindElement(By.Id("CancelButton")).Click();
-            return new CustomerManagementPage(Pitstop);
-        }
+    public async Task<CustomerManagementPage> CancelAsync()
+    {
+        await Page.ClickAsync("#CancelButton");
+        return new CustomerManagementPage(Pitstop);
     }
 }

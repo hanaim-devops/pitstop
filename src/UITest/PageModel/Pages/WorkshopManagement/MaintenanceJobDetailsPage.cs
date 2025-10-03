@@ -1,33 +1,29 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+namespace Pitstop.UITest.PageModel.Pages.WorkshopManagement;
 
-namespace Pitstop.UITest.PageModel.Pages.WorkshopManagement
+/// <summary>
+/// Represents the MaintenanceJob Details page.
+/// </summary>
+public class MaintenanceJobDetailsPage : PitstopPage
 {
-    /// <summary>
-    /// Represents the MaintenanceJob Details page.
-    /// </summary>
-    public class MaintenanceJobDetailsPage : PitstopPage
-    {        
-        public MaintenanceJobDetailsPage(PitstopApp pitstop) : base("Workshop Management - details", pitstop)
-        {
-        }
+    public MaintenanceJobDetailsPage(PitstopApp pitstop) : base("Workshop Management - details", pitstop)
+    {
+    }
 
-        public FinishMaintenanceJobPage Complete()
-        {
-            WebDriver.FindElement(By.Id("CompleteButton")).Click();
-            return new FinishMaintenanceJobPage(Pitstop);
-        }
+    public async Task<FinishMaintenanceJobPage> CompleteAsync()
+    {
+        await Page.ClickAsync("#CompleteButton");
+        return new FinishMaintenanceJobPage(Pitstop);
+    }
 
-        public WorkshopManagementPage Back()
-        {
-            WebDriver.FindElement(By.Id("BackButton")).Click();
-            return new WorkshopManagementPage(Pitstop);
-        }
+    public async Task<WorkshopManagementPage> BackAsync()
+    {
+        await Page.ClickAsync("#BackButton");
+        return new WorkshopManagementPage(Pitstop);
+    }
 
-        public MaintenanceJobDetailsPage GetJobStatus(out string status)
-        {
-            status = WebDriver.FindElement(By.Id("JobStatus")).Text;
-            return this;
-        }
+    public async Task<string> GetJobStatusAsync()
+    {
+        var statusElement = await Page.QuerySelectorAsync("#JobStatus");
+        return await statusElement.TextContentAsync();
     }
 }

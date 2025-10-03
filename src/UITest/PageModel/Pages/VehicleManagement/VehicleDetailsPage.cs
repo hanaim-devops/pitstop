@@ -1,21 +1,17 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+namespace Pitstop.UITest.PageModel.Pages.VehicleManagement;
 
-namespace Pitstop.UITest.PageModel.Pages.VehicleManagement
-{
-    /// <summary>
-    /// Represents the VehicleDetails page.
-    /// </summary>
-    public class VehicleDetailsPage : PitstopPage
-    {        
-        public VehicleDetailsPage(PitstopApp pitstop) : base("Vehicle Management - details", pitstop)
-        {
-        }
+/// <summary>
+/// Represents the VehicleDetails page.
+/// </summary>
+public class VehicleDetailsPage : PitstopPage
+{        
+    public VehicleDetailsPage(PitstopApp pitstop) : base("Vehicle Management - details", pitstop)
+    {
+    }
 
-        public VehicleManagementPage Back()
-        {
-            WebDriver.FindElement(By.Id("BackButton")).Click();
-            return new VehicleManagementPage(Pitstop);
-        }
+    public async Task<VehicleManagementPage> BackAsync()
+    {
+        await Page.ClickAsync("#BackButton");
+        return new VehicleManagementPage(Pitstop);
     }
 }

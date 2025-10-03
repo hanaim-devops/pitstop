@@ -1,45 +1,34 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+namespace Pitstop.UITest.PageModel.Pages.WorkshopManagement;
 
-namespace Pitstop.UITest.PageModel.Pages.WorkshopManagement
+/// <summary>
+/// Represents the Register MaintenanceJob page.
+/// </summary>
+public class RegisterMaintenanceJobPage : PitstopPage
 {
-    /// <summary>
-    /// Represents the Register MaintenanceJob page.
-    /// </summary>
-    public class RegisterMaintenanceJobPage : PitstopPage
+    public RegisterMaintenanceJobPage(PitstopApp pitstop) : base("Workshop Management - schedule maintenance", pitstop)
     {
-        public RegisterMaintenanceJobPage(PitstopApp pitstop) : base("Workshop Management - schedule maintenance", pitstop)
-        {
-        }
+    }
 
-        public RegisterMaintenanceJobPage FillJobDetails(string startTime, string endTime, string description, string licenseNumber)
-        {
-            var startTimeBox = WebDriver.FindElement(By.Name("StartTime"));
-            startTimeBox.Clear();
-            startTimeBox.SendKeys(startTime);
+    public async Task<RegisterMaintenanceJobPage> FillJobDetailsAsync(string startTime, string endTime, string description, string licenseNumber)
+    {
+        await Page.FillAsync("[name=\"StartTime\"]", startTime);
+        await Page.FillAsync("[name=\"EndTime\"]", endTime);
+        await Page.FillAsync("[name=\"Description\"]", description);
 
-            var endTimeBox = WebDriver.FindElement(By.Name("EndTime"));
-            endTimeBox.Clear();
-            endTimeBox.SendKeys(endTime);
+        await Page.SelectOptionAsync("#SelectedVehicleLicenseNumber", licenseNumber);
 
-            WebDriver.FindElement(By.Name("Description")).SendKeys(description);
-            
-            SelectElement select = new SelectElement(WebDriver.FindElement(By.Id("SelectedVehicleLicenseNumber")));
-            select.SelectByValue(licenseNumber);
-            
-            return this;
-        }
+        return this;
+    }
 
-        public WorkshopManagementPage Submit()
-        {
-            WebDriver.FindElement(By.Id("SubmitButton")).Click();
-            return new WorkshopManagementPage(Pitstop);
-        }
+    public async Task<WorkshopManagementPage> SubmitAsync()
+    {
+        await Page.ClickAsync("#SubmitButton");
+        return new WorkshopManagementPage(Pitstop);
+    }
 
-        public WorkshopManagementPage Cancel()
-        {
-            WebDriver.FindElement(By.Id("CancelButton")).Click();
-            return new WorkshopManagementPage(Pitstop);
-        }
+    public async Task<WorkshopManagementPage> CancelAsync()
+    {
+        await Page.ClickAsync("#CancelButton");
+        return new WorkshopManagementPage(Pitstop);
     }
 }
